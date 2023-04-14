@@ -7,6 +7,7 @@ package dao;
 import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Pessoa;
@@ -29,18 +30,32 @@ public class PessoaDao {
             pst.setString(3, pVO.getEndereco());
             pst.setString(4, pVO.getTelefone());
             pst.executeUpdate();
-            
+
         } catch (SQLException e) {
             System.out.println("Erro ao cadastar Pessoa\n" + e.getMessage());
         }
     }
-    
-    public ArrayList<Pessoa>getPessoas(){
+
+    public ArrayList<Pessoa> getPessoas() {
         ArrayList<Pessoa> pessoas = new ArrayList<>();
         try {
-            
+            Connection con = Conexao.getConexao();
+            String sql = "select * from pessoas";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Pessoa p = new Pessoa();
+                
+                p.setIdPessoa(rs.getInt("idPessoa"));
+                p.setNome(rs.getString("nome"));
+                p.setCpf(rs.getString("cpf"));
+                p.setEndereco(rs.getString("endereco"));
+                p.setTelefone(rs.getString("telefone"));
+                pessoas.add(p);
+                
+            }
         } catch (SQLException e) {
-            System.out.println("Erro ao listr pessoas.\n"+e.getMessage());
+            System.out.println("Erro ao listr pessoas.\n" + e.getMessage());
         }
         return pessoas;
     }
