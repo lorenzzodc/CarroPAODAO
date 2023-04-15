@@ -16,9 +16,9 @@ import java.sql.SQLException;
  */
 public class Conexao {
 
-    private static String host = "jdbc:mysql:;;localhost:3306/carro";
+    private static String host = "jdbc:mysql://localhost:3306/carro";
     private static String user = "root";
-    private static String pass = ";";
+    private static String pass = "";
 
     public static Connection getConexao() throws SQLException {
         Connection c = null;

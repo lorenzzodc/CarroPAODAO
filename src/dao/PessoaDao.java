@@ -22,7 +22,7 @@ public class PessoaDAO {
         try {
             //buscar conexão com BD
             Connection con = Conexao.getConexao();
-            String sql = "insert into pessoas values (null,?,?,?,)";
+            String sql = "insert into pessoas values (null,?,?,?,?)";
             //Criar espaço para executar script
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, pVO.getNome());
@@ -84,33 +84,31 @@ public class PessoaDAO {
         return p;
     }
 
-        public void atualizarPessoaDAO(Pessoa pVO){
-            try{
-                Connection con = Conexao.getConexao();
-            String sql = "update pessoas set nome = ?, endereco = ?, telefone = ?"+"where cpf=?";
+    public void atualizarPessoaDAO(Pessoa pVO) {
+        try {
+            Connection con = Conexao.getConexao();
+            String sql = "update pessoas set nome = ?, endereco = ?, telefone = ? where cpf=?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1,pVO.getNome());
-            pst.setString(2,pVO.getEndereco());
-            pst.setString(3,pVO.getTelefone());
-            pst.setString(4,pVO.getCpf());
+            pst.setString(1, pVO.getNome());
+            pst.setString(2, pVO.getEndereco());
+            pst.setString(3, pVO.getTelefone());
+            pst.setString(4, pVO.getCpf());
             pst.executeUpdate();
-            }catch (SQLException e){
-                System.out.println("Erro ao atualizar Pessoa.\n"+e.getMessage());
-            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar Pessoa.\n" + e.getMessage());
         }
-        
-        public void deletarPessoaDAO(String cpf){
-            try {
-                Connection con = Conexao.getConexao();
-                String sql = "delete from pessoas where cpf = ?";
-                PreparedStatement pst = con.prepareStatement(sql);
-                pst.setString(1, cpf);
-                pst.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("erro ao deletar Pessoa.\n"+e.getLocalizedMessage());
-            }
-            }
-{
+    }
+
+    public void deletarPessoaDAO(String cpf) {
+        try {
+            Connection con = Conexao.getConexao();
+            String sql = "delete from pessoas where cpf = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, cpf);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("erro ao deletar Pessoa.\n" + e.getLocalizedMessage());
         }
-    
+    }
+
 }
